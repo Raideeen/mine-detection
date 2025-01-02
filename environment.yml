@@ -1,0 +1,11 @@
+name: landmine_detection
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - bleak
+  - numpy
+  - pandas
+  - scikit-learn
+  - platformio
+prefix: /opt/miniforge/envs/landmine_detection
