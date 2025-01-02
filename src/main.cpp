@@ -80,7 +80,7 @@ void loop()
       magnetometerCharacteristic.writeValue((const uint8_t *)data, strlen(data));
       Serial.println(data); // For debugging
 
-      delay(100); // Adjust for desired sampling rate
+      delay(100);
     }
 
     Serial.println("Disconnected from central");

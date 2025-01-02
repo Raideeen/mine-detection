@@ -1,3 +1,7 @@
+"""
+Script to record the data emitted by the Arduino Nano 33 BLE Sense by Bluetooth and write it into a computer in a CSV format.
+See: https://docs.arduino.cc/tutorials/nano-33-ble-sense/ble-device-to-device/
+"""
 import asyncio
 import math
 from bleak import BleakClient, BleakScanner
@@ -7,6 +11,7 @@ import csv
 DEVICE_NAME = "Magnetometer"
 SERVICE_UUID = "12345678-1234-5678-1234-56789abcdef0"
 CHARACTERISTIC_UUID = "12345678-1234-5678-1234-56789abcdef1"
+
 
 async def main():
     devices = await BleakScanner.discover()
@@ -33,8 +38,8 @@ async def main():
                             magnitude = math.sqrt(mag_x**2 + mag_y**2 + mag_z**2)
                             print(magnitude)
                             
-                            # Annotate based on simple heuristic (e.g., magnitude threshold)
-                            label = "0" if magnitude < 100 else "1"  # Adjust threshold based on observation
+                            # Annotation of simple heuristic (e.g., magnitude threshold)
+                            label = "0" if magnitude < 100 else "1"  # to adapt based on real life observation 
                             
                             # Add timestamp and save to CSV
                             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -45,7 +50,7 @@ async def main():
 
                     # Start receiving data
                     await client.start_notify(CHARACTERISTIC_UUID, notification_handler)
-                    await asyncio.sleep(60)  # Receive notifications for 30 seconds
+                    await asyncio.sleep(60)  # Receive notifications for 60 seconds
                     await client.stop_notify(CHARACTERISTIC_UUID)
 
 asyncio.run(main())
